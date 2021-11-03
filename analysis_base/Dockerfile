@@ -5,13 +5,14 @@ ENV PATH="$HOME/local/bin/:${PATH}"
 
 WORKDIR /root
 
-RUN apt update && \
+RUN \
+  apt update && \
   apt install -y build-essential python3-dev cmake git vim wget unzip openjdk-8-jre-headless && \
   mkdir -p $HOME/.vim/bundle && cd ~/.vim/bundle && \
   git clone https://github.com/VundleVim/Vundle.vim.git && \
   wget -O $HOME/.vimrc https://raw.githubusercontent.com/skoyamamd/gcp_dotfiles/master/vimrc && \
   vim -c PluginInstall -c qall && \
-  cd $HOME/.vim/bundle/YouCompleteMe &&  \
+  cd $HOME/.vim/bundle/YouCompleteMe && \
   python3 install.py
 
 RUN \
@@ -35,18 +36,10 @@ RUN \
   unzip plink2_linux_x86_64_20211011.zip && \
   wget https://s3.amazonaws.com/plink1-assets/dev/plink_linux_x86_64.zip && \
   unzip plink_linux_x86_64.zip && \
-  wget https://github.com/broadinstitute/gatk/releases/download/4.2.3.0/gatk-4.2.3.0.zip \
+  wget https://github.com/broadinstitute/gatk/releases/download/4.2.3.0/gatk-4.2.3.0.zip && \
   unzip gatk-4.2.3.0.zip && \
-  ln -sn gatk-4.2.3.0/gatk-package-4.2.3.0-local.jar gatk \
-  wget https://github.com/broadinstitute/picard/releases/download/2.26.4/picard.jar 
-
-
-
-
-
-
-
-
-
+  ln -sn gatk-4.2.3.0/gatk-package-4.2.3.0-local.jar gatk && \
+  wget https://github.com/broadinstitute/picard/releases/download/2.26.4/picard.jar && \
+  rm *zip
 
 

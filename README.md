@@ -6,6 +6,7 @@
 ### Bind directory
 
 ```docker container run -it --mount type='bind',source=/Users,target/BoundUsers ubuntu:20.04 /bin/bash```
+```docker container run -it --v /Users:/BoundUsers ubuntu:20.04 /bin/bash```
 
 ### Build image
 
@@ -23,4 +24,5 @@
 ### Set path
 
 ```ENV PATH="/opt/local/:${PATH}"```
+
 
