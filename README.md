@@ -3,6 +3,10 @@
 
 ```docker container run -it ubuntu:20.04 /bin/bash```
 
+### Bind directory
+
+```docker container run -it --mount type='bind',source=/Users,target/BoundUsers ubuntu:20.04 /bin/bash```
+
 ### Build image
 
 ```docker image build -t xxxx/sample:latest .```
