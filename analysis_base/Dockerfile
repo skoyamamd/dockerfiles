@@ -1,10 +1,12 @@
 FROM ubuntu:20.04
 
-ENV DEBIAN_FRONTEND=noninteractive 
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PATH="$HOME/local/bin/:${PATH}"
+
 WORKDIR /root
 
 RUN apt update && \
-  apt install -y build-essential python3-dev cmake git vim wget unzip && \
+  apt install -y build-essential python3-dev cmake git vim wget unzip openjdk-8-jre-headless && \
   mkdir -p $HOME/.vim/bundle && cd ~/.vim/bundle && \
   git clone https://github.com/VundleVim/Vundle.vim.git && \
   wget -O $HOME/.vimrc https://raw.githubusercontent.com/skoyamamd/gcp_dotfiles/master/vimrc && \
@@ -12,7 +14,8 @@ RUN apt update && \
   cd $HOME/.vim/bundle/YouCompleteMe &&  \
   python3 install.py
 
-RUN cd $HOME && \
+RUN \
+  cd $HOME && \
   wget --no-check-certificate https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
   bash ~/miniconda.sh -b -p $HOME/miniconda && \
   eval "$($HOME/miniconda/bin/conda shell.bash hook)" && \
@@ -25,7 +28,25 @@ RUN cd $HOME && \
   conda config --add channels conda-forge && \
   conda install samtools==1.11
 
-RUN mkdir -p $HOME/local/bin && \
+RUN \
+  mkdir -p $HOME/local/bin && \
+  cd $HOME/local/bin && \
   wget https://s3.amazonaws.com/plink2-assets/plink2_linux_x86_64_20211011.zip && \
-  unzip plink2_linux_x86_64_20211011.zip \
+  unzip plink2_linux_x86_64_20211011.zip && \
+  wget https://s3.amazonaws.com/plink1-assets/dev/plink_linux_x86_64.zip && \
+  unzip plink_linux_x86_64.zip && \
+  wget https://github.com/broadinstitute/gatk/releases/download/4.2.3.0/gatk-4.2.3.0.zip \
+  unzip gatk-4.2.3.0.zip && \
+  ln -sn gatk-4.2.3.0/gatk-package-4.2.3.0-local.jar gatk \
+  wget https://github.com/broadinstitute/picard/releases/download/2.26.4/picard.jar 
+
+
+
+
+
+
+
+
+
+
 
