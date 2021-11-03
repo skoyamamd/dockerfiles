@@ -7,4 +7,7 @@
 
 ```docker image build -t xxxx/sample:latest .```
 
+### Push image
+
+```docker push xxxx/sample:latest```
 
